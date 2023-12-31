@@ -3,7 +3,6 @@
 {% block title %} Product List {% endblock %}
 
 {% block content %}
-    {% comment %} {% load filters %} {% endcomment %}
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
@@ -18,7 +17,6 @@
                 </div>
                 <div class="col-md-2">
                     <select name="variant" id="variant" class="form-control">
-                        {% comment %} <option selected disabled>--Select A Variant--</option> {% endcomment %}
                         <option value="Maroon"><b>Maroon </b></option>
                         <option value="Black"><b>Black</b></option>
                         <option value="Red"><b>Red </b></option>
@@ -107,17 +105,6 @@
 
         </div>
         {% comment %} {% endif %} {% endcomment %}
-
-        {% comment %} <div class="card-footer">
-            <div class="row justify-content-between">
-                <div class="col-md-6">
-                    <p>Showing 1 to 10 out of 100</p>
-                </div>
-                <div class="col-md-2">
-
-                </div>
-            </div>
-        </div> {% endcomment %}
 
         <div class="card-footer">
             <div class="row justify-content-between">

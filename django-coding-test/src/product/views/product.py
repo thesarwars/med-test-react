@@ -61,7 +61,6 @@ class ProductVariantView(generic.ListView):
     model = ProductVariant
     template_name = 'products/list.html'
     context_object_name = 'colors'
-    # paginate_by = 2
     def get_queryset(self):
         return ProductVariant.objects.all()
     
