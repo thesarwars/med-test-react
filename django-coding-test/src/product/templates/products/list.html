@@ -19,10 +19,10 @@
                 <div class="col-md-2">
                     <select name="variant" id="variant" class="form-control">
                         {% comment %} <option selected disabled>--Select A Variant--</option> {% endcomment %}
-                        <option disabled><b>Color</b></option>
-                        {% for color in product_variant %}
-                            <option value="{{color}}">{{color.variant_title}}</option>
-                        {% endfor %}
+                        <option value="Maroon"><b>Maroon </b></option>
+                        <option value="Black"><b>Black</b></option>
+                        <option value="Red"><b>Red </b></option>
+                        <option value="White"><b>White </b></option>
                         {% comment %} <option disabled><b>Size</b></option>
                         {% for size in 'size'|title %}
                             <option value="{{size}}">{{size}}</option>

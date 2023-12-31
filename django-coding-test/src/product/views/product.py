@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.views import generic
 
 from product.models import Variant, Product, ProductVariantPrice, ProductVariant
@@ -58,10 +60,11 @@ class ProductListView(generic.ListView):
 class ProductVariantView(generic.ListView):
     model = ProductVariant
     template_name = 'products/list.html'
-    context_object_name = 'product_variant'
+    context_object_name = 'colors'
     # paginate_by = 2
-    queryset = ProductVariant.objects.all()
-    print(queryset)
+    def get_queryset(self):
+        return ProductVariant.objects.all()
+    
     
     
 def filtering(request):
