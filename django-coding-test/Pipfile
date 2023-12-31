@@ -9,6 +9,7 @@ django-dotenv = "*"
 django-extensions = "*"
 djangorestframework = "*"
 pipfile = "*"
+matplotlib = "*"
 
 [dev-packages]
 

@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 from product.views.product import CreateProductView, ProductListView, filtering, ProductVariantView
 from product.views.variant import VariantView, VariantCreateView, VariantEditView
-from product.models import ProductVariantPrice
+from product.models import ProductVariantPrice, ProductVariant
 
 app_name = "product"
 
@@ -18,8 +18,12 @@ urlpatterns = [
     path('list/', ProductListView.as_view(template_name='products/list.html', extra_context={
         'product': True,
         # 'product_variant_prices': ProductVariantPrice.objects.all(),
+        # 'product_variant': ProductVariantView.as_view()
     }), name='list.product'),
     
     path('filter/', filtering, name='list_filtered'),
-    path('color/', ProductVariantView.as_view(), name='product_variant'),
+    # path('color/', ProductVariantView.as_view(), name='product_variant'),
+    path('color/', ProductVariantView.as_view(template_name='products/list.html', extra_context={
+        'product': True,
+    }), name='product_variant'),
 ]

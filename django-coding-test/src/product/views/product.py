@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.list import ListView
 from django.db.models import Q
+from django.http import HttpResponse
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -31,19 +32,15 @@ class CreateProductView(generic.TemplateView):
         
         
         if form.is_valid():
-            # Process the form data and save to the database
             title = form.cleaned_data['title']
             sku = form.cleaned_data['sku']
             description = form.cleaned_data['description']
             # save = Product.objects.create(title=title, sku=sku, description=description)
-            # Save the data to the Product model or perform other actions
             Product.objects.create(title=title, sku=sku, description=description)
             # success_url = reverse('list.product')
-            # Redirect to a success page or another URL
-            return redirect('success_url')
+            return HttpResponse('Product Created Successfully')
             # return save
 
-        # If the form is not valid, re-render the form with errors
         variants = Variant.objects.filter(active=True).values('id', 'title')
         context = {'product': True, 'variants': list(variants.all()), 'form': form}
         return render(request, self.template_name, context)
@@ -60,7 +57,7 @@ class ProductListView(generic.ListView):
 class ProductVariantView(generic.ListView):
     model = ProductVariant
     template_name = 'products/list.html'
-    context_object_name = 'colors'
+    context_object_name = 'prod_variant'
     def get_queryset(self):
         return ProductVariant.objects.all()
     

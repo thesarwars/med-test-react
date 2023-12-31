@@ -3,6 +3,7 @@
 {% block title %} Product List {% endblock %}
 
 {% block content %}
+    {% load my_filters %}
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
@@ -17,14 +18,15 @@
                 </div>
                 <div class="col-md-2">
                     <select name="variant" id="variant" class="form-control">
-                        <option value="Maroon"><b>Maroon </b></option>
-                        <option value="Black"><b>Black</b></option>
-                        <option value="Red"><b>Red </b></option>
-                        <option value="White"><b>White </b></option>
-                        {% comment %} <option disabled><b>Size</b></option>
-                        {% for size in 'size'|title %}
-                            <option value="{{size}}">{{size}}</option>
-                        {% endfor %} {% endcomment %}
+                            <option selected disabled>--Select A Variant--</option>
+                            <option disabled><b>Color</b></option>
+                            {% for color in 'color'|get_product_variant_titles %}
+                                <option value="{{color}}">{{color}}</option>
+                            {% endfor %}
+                            <option disabled><b>Size</b></option>
+                            {% for size in 'size'|get_product_variant_titles %}
+                                <option value="{{size}}">{{size}}</option>
+                            {% endfor %}
 
                     </select>
                 </div>
