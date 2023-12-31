@@ -1,6 +1,6 @@
 from django.views import generic
 
-from product.models import Variant, Product, ProductVariantPrice
+from product.models import Variant, Product, ProductVariantPrice, ProductVariant
 from product.forms import CreateProd
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -54,33 +54,42 @@ class ProductListView(generic.ListView):
     paginate_by = 2
     queryset = ProductVariantPrice.objects.all()
     
+
+class ProductVariantView(generic.ListView):
+    model = ProductVariant
+    template_name = 'products/list.html'
+    context_object_name = 'product_variant'
+    # paginate_by = 2
+    queryset = ProductVariant.objects.all()
+    print(queryset)
     
-# def filtering(request, param):
-#     qs = ProductVariantPrice.objects.all()
     
-#     title = request.Get.get('title')
-#     variant = request.Get.get('variant')
-#     price_from = request.Get.get('price_from')
-#     price_to = request.Get.get('price_to')
-#     date = request.Get.get('date')
+def filtering(request):
+    qs = ProductVariantPrice.objects.all()
     
-#     if param != '' and param is not None:
-#         qs = qs.filter(product__title__icontains=title)
+    title = request.GET.get('title')
+    variant = request.GET.get('variant')
+    price_from = request.GET.get('price_from')
+    price_to = request.GET.get('price_to')
+    date = request.GET.get('date')
+    
+    if title != '' and title is not None:
+        qs = qs.filter(product__title__icontains=title)
         
-#     if variant and variant != '--Select A Variant--':
-#         qs = qs.filter(
-#             Q(product_variant_one__variant_title__icontains=variant) |
-#             Q(product_variant_two__variant_title__icontains=variant) |
-#             Q(product_variant_three__variant_title__icontains=variant)
-#         )
+    if variant and variant != '--Select A Variant--':
+        qs = qs.filter(
+            Q(product_variant_one__variant_title__icontains=variant) |
+            Q(product_variant_two__variant_title__icontains=variant) |
+            Q(product_variant_three__variant_title__icontains=variant)
+        )
         
-#     if price_from:
-#         qs = qs.filter(price__gte=price_from)
+    if price_from:
+        qs = qs.filter(price__gte=price_from)
         
-#     if price_to:
-#         qs = qs.filter(price__gte=price_to)
+    if price_to:
+        qs = qs.filter(price__gte=price_to)
         
-#     if date:
-#         qs = qs.filter(product__created_at__gte=date)
+    if date:
+        qs = qs.filter(product__created_at__gte=date)
         
-#     return render(request, 'products/list.html', {'product_variant_prices': qs})
+    return render(request, 'products/list.html', {'product_variant_prices': qs})

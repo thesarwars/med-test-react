@@ -3,6 +3,7 @@
 {% block title %} Product List {% endblock %}
 
 {% block content %}
+    {% comment %} {% load filters %} {% endcomment %}
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
@@ -10,14 +11,22 @@
 
 
     <div class="card">
-        <form action="" method="get" class="card-header">
+        <form action="{% url 'product:list_filtered' %}" method="get" class="card-header">
             <div class="form-row justify-content-between">
                 <div class="col-md-2">
                     <input type="text" name="title" placeholder="Product Title" class="form-control">
                 </div>
                 <div class="col-md-2">
-                    <select name="variant" id="" class="form-control">
-                        <option selected disabled>--Select A Variant--</option>
+                    <select name="variant" id="variant" class="form-control">
+                        {% comment %} <option selected disabled>--Select A Variant--</option> {% endcomment %}
+                        <option disabled><b>Color</b></option>
+                        {% for color in product_variant %}
+                            <option value="{{color}}">{{color.variant_title}}</option>
+                        {% endfor %}
+                        {% comment %} <option disabled><b>Size</b></option>
+                        {% for size in 'size'|title %}
+                            <option value="{{size}}">{{size}}</option>
+                        {% endfor %} {% endcomment %}
 
                     </select>
                 </div>
@@ -110,6 +119,37 @@
             </div>
         </div> {% endcomment %}
 
-        
+        <div class="card-footer">
+            <div class="row justify-content-between">
+                <div class="col-md-6">
+                    <p>Showing {{page_obj.start_index }} to {{page_obj.end_index }} out of {{ product_variant_prices|length }}</p>
+                </div>
+                <div class="col-md-2">
+
+                    {#                    {% if is_paginated %}#}
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li>&laquo;<a href="?page={{ page_obj.previous_page_number }}">Previous&nbsp;&nbsp;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+                        {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                            &nbsp;&nbsp;<li><a href="?page={{ i }}">{{ i }}</a></li>&nbsp;&nbsp;
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">&nbsp;&nbsp;Next</a>&raquo;</li>
+                        {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                    {#                    {% endif %}#}
+
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
